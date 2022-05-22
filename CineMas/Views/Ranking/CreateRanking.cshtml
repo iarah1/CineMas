@@ -1,0 +1,60 @@
+﻿@using CineMas.Models;
+@{
+    ViewBag.Title = "CreateRanking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{Pelicula pelicula = (Pelicula)ViewBag.peliculasById;}
+<nav class="navbar navbar-light bg-light m-2">
+    <h2>Agregar Calificación</h2>
+</nav>
+<section class="row justify-content-md-center">
+    <div class="card m-2 b-2 col-sm-5 col-md-5 col-lg-5 col-xlg-5">
+        <div class="card-header text-justify">
+            <h5 class="card-title">@pelicula.nombre</h5>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-5 col-xlg-5">
+                <img class="w-100 mt-3 mb-0" src="@pelicula.imgUrl" alt="Imagen de Portada" style=" border-radius: 5px; height: 80%;">
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-7 col-xlg-7">
+                <div class="card-body text-justify">
+                    <p class="card-text">@pelicula.sinopsis</p>
+                    <p>Género: @pelicula.genero</p>
+                    <p>Director: @pelicula.director</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer col-mb-auto text-justify">
+            <form method="post">
+                <div class="form-group">
+                    <div class="form-group">
+                        <fieldset>
+                            <input name="idPelicula" class="form-control" type="text" placeholder="id Pelicula" value="@pelicula.id" readonly hidden>
+                        </fieldset>
+                        <label class="m-2" for="exampleFormControlSelect1">Seleccione su calificacion</label>
+                        <fieldset>
+                            <div class="rate">
+                                <input type="radio" id="star5" name="rate" value="5" />
+                                <label for="star5" title="5">5 stars</label>
+                                <input type="radio" id="star4" name="rate" value="4" />
+                                <label for="star4" title="4">4 stars</label>
+                                <input type="radio" id="star3" name="rate" value="3" />
+                                <label for="star3" title="3">3 stars</label>
+                                <input type="radio" id="star2" name="rate" value="2" />
+                                <label for="star2" title="2">2 stars</label>
+                                <input type="radio" id="star1" name="rate" value="1" />
+                                <label for="star1" title="1">1 star</label>
+                            </div>
+                        </fieldset>
+                        <button type="submit" class="btn btn-primary m-1 mt-2">Enviar</button>
+                        @Html.ActionLink("Cancelar", "ShowPeliculas", "Pelicula", new { area = "" }, new { @class = "btn btn-danger m-1 mt-2" })
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+

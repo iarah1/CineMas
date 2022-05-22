@@ -1,0 +1,76 @@
+﻿@using CineMas.Models;
+@{
+    ViewBag.Title = "ShowRankings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<Ranking> rankings = (List<Ranking>)ViewBag.rankings;
+    Pelicula peliculas = (Pelicula)ViewBag.pelicula;
+
+}
+
+<nav class="navbar navbar-light bg-light mt-5 justify-content-md-center">
+    <h2>Peliculas Mejor Calificadas:</h2>
+</nav>
+
+<canvas id="chart" height="100" width="200"></canvas>
+
+<div class="container w-75">
+    
+
+    <nav class="navbar navbar-light bg-light mt-5 justify-content-md-center">
+        <h3>La pelicula más vista es:</h3>
+
+        <div class="card m-2 b-2 col-sm-5 col-md-5 col-lg-5 col-xlg-5">
+            <div class="card-header text-justify">
+                <h5 class="card-title">@peliculas.nombre</h5>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+
+            var valor1 = ['@rankings[0].nombrePelicula','@rankings[1].nombrePelicula','@rankings[2].nombrePelicula','@rankings[3].nombrePelicula','@rankings[4].nombrePelicula'];
+            console.log(valor1[1]);
+            var valor = [@rankings[0].valor,@rankings[1].valor,@rankings[2].valor,@rankings[3].valor,@rankings[4].valor];
+
+
+        var ch = document.getElementById('chart').getContext('2d');
+        var myBarChart = new Chart(ch, {
+            type: 'bar',
+
+            data: {
+                for() {
+                },
+                labels: [valor1[0], valor1[1], valor1[2], valor1[3], valor1[4]],
+                datasets: [{
+                    label: 'Estrellas por Peliculas',
+                    data: [valor[0], valor[1], valor[2], valor[3], valor[4]],
+                    backgroundColor: ['#F1C40F', '#F39C12', '#5D6D7E', '#5D6D7E', '#5D6D7E'],
+                    borderColor: ['#F1C40F', '#F39C12', '#5D6D7E', '#5D6D7E', '#5D6D7E'],
+                    borderWhidth: 2
+                }]
+            },
+
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                            // OR //
+                            beginAtZero: true   // minimum value will be 0.
+                        }
+                    }]
+                }
+            },
+        });
+
+
+</script>
+
+
+

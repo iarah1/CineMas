@@ -1,0 +1,64 @@
+﻿@using CineMas.Models;
+@{ ViewBag.Title = "ShowPeliculas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Categoria> Categorias = (List<Categoria>)ViewBag.categorias;
+
+
+
+}
+
+<div class="row align-items-center h-100">
+    <div class="col-8 mx-auto">
+
+
+        @using (Ajax.BeginForm("GetPeliculas", "Pelicula", new AjaxOptions()
+        {
+            UpdateTargetId = "result",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "Get",
+        }))
+        {
+            <div class="row">
+                <input type="hidden" id="pageId" name="pageId" value="1">
+                <div class="col pr-2">
+                    <select id="categoriaId" name="categoriaId" class="form-control">
+
+                        @foreach (var categoria in Categorias)
+                        {
+                            <option value="@categoria.id">@categoria.nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="col pl-2 pr-2">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Buscar por nombre">
+                </div>
+
+                <div class="col pl-2">
+                    <button type="submit" id="btnBuscar" name="btnBuscar" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div id="result">
+        @{ Html.RenderAction("GetPeliculas", "Pelicula", new { pageId = 1, categoriaId = 0 }); }
+    </div>
+</div>
+
+
+
+
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/Scripts/peliculas.cinemas.js")
+}
+
+
+
+

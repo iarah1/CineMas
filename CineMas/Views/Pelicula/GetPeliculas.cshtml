@@ -1,0 +1,62 @@
+﻿
+@using CineMas.Models;
+@{
+    List<Pelicula> peliculas = (List<Pelicula>)ViewBag.peliculas;
+    Layout = null;
+
+    int currentPage = Convert.ToInt32(Session["CurrentPage"]);
+    int nextPage = (currentPage + 1);
+    int previousPage = (currentPage - 1);
+}
+
+
+<section class="row justify-content-md-center">
+    @foreach (var pelicula in peliculas)
+    {
+        <div class="card m-2 b-2 col-sm-5 col-md-5 col-lg-5 col-xlg-5">
+            <div class="card-header text-justify">
+                <h5 class="card-title">@pelicula.nombre</h5>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-5 col-xlg-5">
+                    <img class="w-100 mt-3 mb-0" src="@pelicula.imgUrl" alt="Imagen de Portada" style=" border-radius: 5px; height: 80%;">
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-7 col-xlg-7">
+                    <div class="card-body text-justify">
+                        <p class="card-text">@pelicula.sinopsis</p>
+                        <p>Género: @pelicula.genero</p>
+                        <p>Director: @pelicula.director</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer col-mb-auto text-justify">
+
+                <p>@Html.ActionLink("Calificar", "CreateRanking", "Ranking", new { idPelicula = pelicula.id }, new { @class = "btn btn-info" })</p>
+          
+                Calificación:
+                @{ 
+                    string calificacion = "rate_checked";
+                    if (pelicula.calificacion == 0) { calificacion = ""; }
+                    for (int i = 1; i < 6; i++)
+                    {
+
+                       <span class="fa fa-star @calificacion"></span>
+                        if(pelicula.calificacion == i) { calificacion = ""; }
+                    }
+                }
+                / Usuarios: @pelicula.vistas
+           
+                    
+                
+            </div>
+        </div>
+    }
+</section>
+
+
+<div class="row mt-2 d-flex justify-content-md-around">
+    <div class="">
+        <button type="button" id="btnPrevious" name="btnPrevious" class="btn btn-primary" onclick="fnPrevious(@previousPage)">Anterior</button>
+        <button type="button" id="btnNext" name="btnPrevious" class="btn btn-primary" onclick="fnNext(@nextPage)">Siguiente</button>
+    </div>
+</div>
